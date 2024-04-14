@@ -2,8 +2,8 @@
 
 const mapSize = 6; // Log2 of the grid size (keep the value between [1, 6])
 const cellSize = 8; // Size of the rooms
-const mapHeight = 7; // Height of the walls
-const wallThickness = 0.25; // Wall thickness
+const mapHeight = 10; // Height of the walls
+const wallThickness = 0.1; // Wall thickness
 const wallRemoval = 0.5; // Random wall removal proportion
 
 const transform = (a, r, tx, ty, o = 1) => a.map((v) => [(o * v[r] + tx) / 2, (o * v[1 - r] + ty) / 2]);

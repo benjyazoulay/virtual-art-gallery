@@ -29,18 +29,22 @@ module.exports = (regl, data, useReflexion) => {
         }
 
         void main() {
-            vec3 totalLight = texture2D(wallTexture, vec2(v_pos.x + v_pos.z, 7.0-v_pos.y)/8.0).rgb;
-            float dist = length(v_relativepos);
-            totalLight = mix(totalLight, vec3(90.0,92.0,95.0)/255.0, step(6.99, v_pos.y));
-            totalLight *= mix(0.7, 1.0, smoothstep(0.1, 0.12, v_pos.y));
-            totalLight *= abs(v_normal.x)/64.0 + 1.0;
-            if(v_normal.y > 0.0) {
-                totalLight = 0.47+0.1*texture2D(floorTexture, v_pos.xz / 8.0).rgb;
-            }
-            totalLight *= (0.5 + 0.5*hue2rgb(0.5 + (v_pos.x + v_pos.z) / 160.0)); //color variation
-            float alpha = .98+smoothstep(150.,0.,dist)-v_normal.y; // reflexion
-            gl_FragColor = vec4(totalLight, ${useReflexion ? "alpha" : "1.0"});
-        }`,
+			vec3 wallLight = texture2D(wallTexture, vec2(v_pos.x + v_pos.z, 7.0-v_pos.y)/8.0).rgb;
+			float brightnessFactor = 1.3;
+			vec3 totalLight = wallLight * brightnessFactor;
+			float dist = length(v_relativepos);
+			vec3 ceilingColor = vec3(0.85, 0.85, 0.85);
+			totalLight = mix(totalLight, ceilingColor, step(9.99, v_pos.y));
+			totalLight *= mix(0.7, 1.0, smoothstep(0.1, 0.12, v_pos.y));
+			totalLight *= abs(v_normal.x)/64.0 + 1.0;
+			if(v_normal.y > 0.0) {
+				vec3 floorLight = texture2D(floorTexture, v_pos.xz / 8.0).rgb;
+				float lightingFactor = 1.0; 
+				totalLight = floorLight * lightingFactor;
+			}
+			totalLight *= (0.5 + 0.5*hue2rgb(0.5 + (v_pos.x + v_pos.z) / 160.0)); // Variation de couleur
+			gl_FragColor = vec4(totalLight, 1.0);
+		}`,
 
         vert: `
         precision highp float;
