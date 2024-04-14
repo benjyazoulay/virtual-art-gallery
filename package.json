@@ -2,9 +2,12 @@
 	"name": "virtual_art_gallery",
 	"description": "Explore an art gallery in your browser.",
 	"version": "1.0.0",
+	"homepage": "https://benjyazoulay.github.io/virtual-art-gallery",
 	"scripts": {
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build",
 		"start": "budo src/index.js",
-		"build": "browserify -p tinyify src/index.js | htmlify base.html > build.html",
+		"build": "browserify -p tinyify src/index.js | htmlify base.html > build/build.html",
 		"genList": "node images/generateList.js",
 		"prestart": "npm run genList",
 		"prebuild": "npm run genList"
@@ -26,6 +29,7 @@
 		"babelify": "^10.0.0",
 		"browserify": "^16.5.2",
 		"budo": "^11.6.4",
+		"gh-pages": "^6.1.1",
 		"inline-htmlify": "^2.0.1",
 		"tinyify": "^3.0.0",
 		"uglify-js": "^3.14.1"
