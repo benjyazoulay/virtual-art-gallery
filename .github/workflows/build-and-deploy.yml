@@ -21,7 +21,7 @@ jobs:
         run: npm run build
       - name: Remove build files from gitignore
         run: |
-          sed -i '/build/build.html/d' .gitignore
+          sed -i '/build.html/d' .gitignore
           sed -i '/images/images.json/d' .gitignore
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
