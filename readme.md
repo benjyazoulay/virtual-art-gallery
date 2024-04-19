@@ -1,1 +1,1 @@
-
+<meta http-equiv="Refresh" content="0; url='https://babelgallery.org/virtual-art-gallery/build'" />
