@@ -26,7 +26,7 @@ const culling = (ppos, pangle, fovx, {vseg, angle}) => {
     return true;
 };
 
-module.exports = (regl, {placements, getAreaIndex}) => {
+module.exports = (regl, {placements, getAreaIndex}, updateInfoWindow) => {
     //console.log(areas);
     let batch = [], shownBatch = [];
     let fetching = true;
@@ -72,6 +72,40 @@ module.exports = (regl, {placements, getAreaIndex}) => {
     };
     // Fetch the first textures
     texture.fetch(regl, 20, dynamicRes, loadPainting, () => fetching = false);
+	
+	const findNearestPainting = (pos, angle, fovX) => {
+        let nearestPainting = null;
+        let nearestDistance = Infinity;
+		console.log(`RAZ--------`)
+        // Parcourir tous les tableaux
+        shownBatch.forEach((painting, index) => {
+            const [start, end] = painting.vseg;
+            const midX = (start[0] + end[0]) / 2;
+            const midY = (start[1] + end[1]) / 2;
+
+            // Calculer la distance du tableau au joueur
+            const dx = midX - pos[0];
+            const dy = midY - pos[2];
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+			console.log(`${distance} m - ${painting.title}`)
+			
+            if (distance<= nearestDistance) {
+				console.log(`Winner: ${painting.title}`);
+				
+                nearestDistance = distance;
+                
+                nearestPainting = {
+                    title: painting.title, // Récupérer le titre du tableau
+					image: `/images/${painting.file}`, // Récupérer l'image du tableau
+                };
+            }
+        });
+		console.log(`${nearestPainting.title}`);
+        return nearestPainting;
+    };
+
+	
     return {
         update: (pos, angle, fovX) => {
             // Estimate player position index
@@ -95,6 +129,15 @@ module.exports = (regl, {placements, getAreaIndex}) => {
             dynamicRes = "low";
             if (dynamicResTimer) clearTimeout(dynamicResTimer);
             dynamicResTimer = setTimeout(() => dynamicRes = "high", dynamicResPeriod);
+			
+			const nearestPainting = findNearestPainting(pos, angle, fovX);
+
+            // Mettre à jour la fenêtre d'information avec le titre du tableau le plus proche
+            if (nearestPainting) {
+                updateInfoWindow(nearestPainting.title, nearestPainting.image);
+            } else {
+                updateInfoWindow('Aucun tableau à proximité');
+            }
         },
         batch: () => shownBatch
     };
