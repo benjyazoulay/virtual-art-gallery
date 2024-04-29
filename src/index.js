@@ -2,7 +2,6 @@
 
 var useReflexion = true;
 var showStats = false;
-//console.log(`Systeme d'exploitation : ${navigator.userAgent}`)
 
 const infoWindow = document.createElement('div');
 infoWindow.style.position = 'fixed';
@@ -40,7 +39,6 @@ const updateInfoWindowContent = (title, image) => {
 	titleElement.textContent = title;
 	titleElement.style.fontSize = '14px';
 	titleElement.style.fontFamily = 'Verdana, sans-serif';
-	//console.log(`${titleElement.textContent}`)
 
     const imageElement = document.createElement('img');
     imageElement.src = image;
@@ -52,7 +50,6 @@ const updateInfoWindowContent = (title, image) => {
     
     infoWindow.appendChild(imageElement);
 	infoWindow.appendChild(titleElement);
-	//console.log('Contenu de infoWindow :', infoWindow.innerHTML);
     closeButton.addEventListener('click', () => {
         infoWindow.style.display = 'none';
     });
