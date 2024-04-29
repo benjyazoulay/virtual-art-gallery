@@ -97,7 +97,7 @@ module.exports = (regl, {placements, getAreaIndex}, updateInfoWindow) => {
                 
                 nearestPainting = {
                     title: painting.title, // Récupérer le titre du tableau
-					image: `/images/${painting.file}`, // Récupérer l'image du tableau
+					image: `./images/${painting.file}`, // Récupérer l'image du tableau
                 };
             }
         });
