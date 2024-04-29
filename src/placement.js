@@ -76,7 +76,7 @@ module.exports = (regl, {placements, getAreaIndex}, updateInfoWindow) => {
 	const findNearestPainting = (pos, angle, fovX) => {
         let nearestPainting = null;
         let nearestDistance = Infinity;
-		console.log(`RAZ--------`)
+		//console.log(`RAZ--------`)
         // Parcourir tous les tableaux
         shownBatch.forEach((painting, index) => {
             const [start, end] = painting.vseg;
@@ -88,10 +88,10 @@ module.exports = (regl, {placements, getAreaIndex}, updateInfoWindow) => {
             const dy = midY - pos[2];
             const distance = Math.sqrt(dx * dx + dy * dy);
 
-			console.log(`${distance} m - ${painting.title}`)
+			//console.log(`${distance} m - ${painting.title}`)
 			
             if (distance<= nearestDistance) {
-				console.log(`Winner: ${painting.title}`);
+				//console.log(`Winner: ${painting.title}`);
 				
                 nearestDistance = distance;
                 
@@ -101,7 +101,7 @@ module.exports = (regl, {placements, getAreaIndex}, updateInfoWindow) => {
                 };
             }
         });
-		console.log(`${nearestPainting.title}`);
+		//console.log(`${nearestPainting.title}`);
         return nearestPainting;
     };
 
