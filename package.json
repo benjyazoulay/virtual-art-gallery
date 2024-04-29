@@ -7,7 +7,7 @@
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
 		"start": "budo src/index.js",
-		"build": "browserify -p tinyify src/index.js | htmlify base.html > build.html",
+		"build": "browserify -p tinyify src/index.js | htmlify base.html > build/build.html",
 		"genList": "node images/generateList.js",
 		"prestart": "npm run genList",
 		"prebuild": "npm run genList"
